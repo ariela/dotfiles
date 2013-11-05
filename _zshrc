@@ -1,4 +1,25 @@
+## 環境変数設定 ==========================================================
+# パス設定
+typeset -xT SUDO_PATH sudo_path
+typeset -U sudo_path
+sudo_path=({,/usr/pkg,/usr/local,/usr}/sbin(N-/))
+export PATH=/usr/local/bin:$PATH
 
+# LANG設定
+export LANG=ja_JP.UTF-8
+
+# 実行時間
+REPORTTIME=3
+
+##ログ設定 ===============================================================
+HISTFILE=${HOME}/.zsh_history
+HISTSIZE=100000
+SAVEHIST=100000
+setopt hist_ignore_dups
+setopt share_history
+#setopt extended_history
+#function history-all { history -E 1 }
+#setopt COMPLETE_IN_WORD
 
 # 自動補完設定 ===========================================================
 fpath=(${HOME}/.zsh/functions/Completion ${fpath})
