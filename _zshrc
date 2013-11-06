@@ -1,3 +1,6 @@
+## 基本設定 ==============================================================
+
+
 ## 環境変数設定 ==========================================================
 # パス設定
 typeset -xT SUDO_PATH sudo_path
@@ -7,6 +10,9 @@ export PATH=/usr/local/bin:$PATH
 
 # LANG設定
 export LANG=ja_JP.UTF-8
+
+# ターミナル設定
+export TERM=xterm-256color
 
 # 実行時間
 REPORTTIME=3
