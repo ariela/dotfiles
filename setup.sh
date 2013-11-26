@@ -1,8 +1,7 @@
 #!/bin/sh
 CURRENT=${PWD}
-SCRIPT_NAME=`/bin/readlink -f $0`
 
-cd `/usr/bin/dirname ${SCRIPT_NAME}`
+cd `/usr/bin/dirname ${0}`
 
 git submodule init
 git submodule update
