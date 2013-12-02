@@ -54,7 +54,7 @@
 
 # HTTP/HTTPS設定
 /sbin/iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-#/sbin/iptables -A INPUT -p tcp --dport 443 -j ACCEPT
+/sbin/iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 
 # glassfish 管理画面設定
 /sbin/iptables -A INPUT -p tcp --dport 4848 -j ACCEPT
