@@ -21,4 +21,14 @@ do
 done
 create_link bin
 
+
+cd ${HOME}
+
+# nvm install
+git clone git://github.com/creationix/nvm.git .nvm
+${HOME}/.nvm/install.sh
+
+# rvm
+curl -L get.rvm.io | bash -s stable
+
 cd ${CURRENT}
