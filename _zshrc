@@ -6,7 +6,7 @@
 typeset -xT SUDO_PATH sudo_path
 typeset -U sudo_path
 sudo_path=({,/usr/pkg,/usr/local,/usr}/sbin(N-/))
-export PATH=/opt/local/bin:/opt/bin:/usr/local/bin:$PATH
+export PATH=/opt/local/bin:/opt/bin:/usr/local/bin:${HOME}/bin:$PATH
 
 # EDITOR設定
 export EDITOR=vim
