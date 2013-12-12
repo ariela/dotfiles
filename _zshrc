@@ -6,7 +6,7 @@
 typeset -xT SUDO_PATH sudo_path
 typeset -U sudo_path
 sudo_path=({,/usr/pkg,/usr/local,/usr}/sbin(N-/))
-export PATH=/usr/local/bin:$PATH
+export PATH=/opt/local/bin:/opt/bin:/usr/local/bin:$PATH
 
 # LANG設定
 export LANG=ja_JP.UTF-8
@@ -67,6 +67,8 @@ freebsd*|darwin*)
     alias ls="ls -G -w"
     alias ll='ls -G -w -al'
     alias la='ls -G -w -a'
+    alias bootlog='last | grep -E "(reboot|shutdown)"'
+    alias routeset='sudo route add 10.0.0.0/24 -interface en1'
     ;;
 linux*)
     alias ls="ls --color=auto -v"
@@ -84,3 +86,12 @@ alias du="du -h"
 alias df="df -h"
 alias vi="vim"
 alias sudo="sudo PATH=$PATH"
+
+# nvm
+[[ -s ${HOME}/.nvm/nvm.sh ]] && . ${HOME}/.nvm/nvm.sh
+nvm use default > /dev/null
+npm_dir=${NVM_PATH}_modules
+export NODE_PATH=${npm_dir}
+
+# rvm
+PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
