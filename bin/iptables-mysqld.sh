@@ -53,16 +53,21 @@
 /sbin/iptables -A INPUT -p tcp --syn --dport 22 -m recent --name sshattack --rcheck --seconds 300 --hitcount 5 -j DROP
 
 # HTTP/HTTPS設定
-/sbin/iptables -A INPUT -p tcp --dport 80 -j ACCEPT
-/sbin/iptables -A INPUT -p tcp --dport 443 -j ACCEPT
-
-# glassfish 管理画面設定
-/sbin/iptables -A INPUT -p tcp --dport 4848 -j ACCEPT
+#/sbin/iptables -A INPUT -p tcp --dport 80 -j ACCEPT
+#/sbin/iptables -A INPUT -p tcp --dport 443 -j ACCEPT
 
 # メール設定
 #/sbin/iptables -A INPUT -p tcp --dport 25 -j ACCEPT
 #/sbin/iptables -A INPUT -p tcp --dport 110 -j ACCEPT
 #/sbin/iptables -A INPUT -p tcp --dport 143 -j ACCEPT
+
+# MySQL設定
+/sbin/iptables -A INPUT -p tcp --dport 3306 -j ACCEPT
+
+# VRRPパケット
+/sbin/iptables -A INPUT -p vrrp -j ACCEPT
+/sbin/iptables -A OUTPUT -p vrrp -J ACCEPT
+
 
 # iptables再起動
 /etc/rc.d/init.d/iptables save
