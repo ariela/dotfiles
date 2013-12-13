@@ -60,6 +60,28 @@ zstyle ':completion:*:sudo:*' command-path /usr/local/sbin \
                                            /bin \
                                            /usr/X11R6/bin
 
+##プロンプト設定 =========================================================
+autoload -U colors zsh/terminfo
+colors
+setopt prompt_subst
+
+source ${HOME}/.zsh/256colorlib.sh
+local HOSTC=$'%{\e[48;5;'"$(printf "%d\n" 0x$(hostname|md5sum|cut -c1-2))"'m%}'
+local DEFAULTC=$'%{\e[m%}'
+local p_dir="\
+${HOSTC}  ${DEFAULTC}\
+%K{019}%F{069} %n@%m %f%k\
+%K{161}%F{212} %m %f%k\
+%K{023}%F{226} %~ %f%k\
+"
+local p_mark="%(?,%F{83},%F{162})%(!,#,%%)%f"
+
+local pl_line1="${p_dir}"
+local pl_line2="${p_mark}"
+
+PROMPT="${pl_line1}"$'\n'"${pl_line2} "
+
+
 ##エイリアス設定 =========================================================
 setopt complete_aliases
 alias where="command -v"
@@ -98,3 +120,7 @@ export NODE_PATH=${npm_dir}
 
 # rvm
 PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+
+
+# color check
+for code in {000..255}; do print -nP -- "%F{$code}$code %f"; [ $((${code} % 16)) -eq 15 ] && echo; done
