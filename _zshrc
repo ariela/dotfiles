@@ -81,9 +81,10 @@ esac
 
 local p_dir="\
 ${HOSTC} ${ETH0IPADDR} ${DEFAULTC}\
-%K{019}%F{069} %n@%m %f%k\
+%K{019}%F{069} %n %f%k\
+%K{136}%F{220} @ %f%k\
 %K{161}%F{212} %m %f%k\
-%K{023}%F{226} %~ %f%k\
+%K{023}%F{082} %~ %f%k\
 "
 local p_mark="%(?,%F{83},%F{162})%(!,#,%%)%f"
 
