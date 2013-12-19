@@ -72,10 +72,10 @@ local DEFAULTC=$'%{\e[m%}'
 
 case "${OSTYPE}" in
 darwin*)
-    local ETH0IPADDR=`ifconfig en0 | grep "inet " | sed "s/.*inet \([0-9]*\.[0-9]*\.[0-9]*\.[0-9    ]*\).*/\1/"`
+    local ETH0IPADDR=`ifconfig en0 | grep "inet " | grep "broadcast" | sed "s/.*inet \([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*/\1/"`
     ;;
 linux*)
-    local ETH0IPADDR=`ip addr show eth0 | grep "inet" | sed "s/.*inet \([0-9]*\.[0-9]*\.[0-9]*\.[0-9    ]*\).*/\1/"`
+    local ETH0IPADDR=`ip addr show eth0 | grep "inet " | grep "brd" | sed "s/.*inet \([0-9]*\.[0-9]*\.[0-9]*\.[0-9]*\).*/\1/"`
     ;;
 esac
 
