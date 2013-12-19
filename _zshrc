@@ -69,7 +69,16 @@ setopt prompt_subst
 source ${HOME}/.zsh/256colorlib.sh
 local HOSTC=$'%{\e[48;5;'"$(printf "%d\n" 0x$(hostname|md5sum|cut -c1-2))"'m%}'
 local DEFAULTC=$'%{\e[m%}'
-local ETH0IPADDR=`ip addr show eth0 | grep "inet" | sed "s/.*inet \([0-9]*\.[0-9]*\.[0-9]*\.[0-9    ]*\).*/\1/"`
+
+case "${OSTYPE}" in
+darwin*)
+    local ETH0IPADDR=`ifconfig en0 | grep "inet " | sed "s/.*inet \([0-9]*\.[0-9]*\.[0-9]*\.[0-9    ]*\).*/\1/"`
+    ;;
+linux*)
+    local ETH0IPADDR=`ip addr show eth0 | grep "inet" | sed "s/.*inet \([0-9]*\.[0-9]*\.[0-9]*\.[0-9    ]*\).*/\1/"`
+    ;;
+esac
+
 local p_dir="\
 ${HOSTC} ${ETH0IPADDR} ${DEFAULTC}\
 %K{019}%F{069} %n@%m %f%k\
