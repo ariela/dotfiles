@@ -6,7 +6,9 @@
 typeset -xT SUDO_PATH sudo_path
 typeset -U sudo_path
 sudo_path=({,/usr/pkg,/usr/local,/usr}/sbin(N-/))
-export PATH=/opt/local/bin:/opt/bin:/usr/local/bin:${HOME}/bin:$PATH
+
+[ ! `echo $PATH | grep "/usr/local/bin"` ] && export PATH=$PATH:/usr/local/bin
+[ ! `echo $PATH | grep "${HOME}/bin"` ]    && export PATH=$PATH:${HOME}/bin
 
 # EDITOR設定
 export EDITOR=vim
@@ -20,7 +22,10 @@ export TERM=xterm-256color
 # 実行時間
 REPORTTIME=3
 
-##ログ設定 ===============================================================
+
+#------------------------------------------------------------------------
+# log configuration
+#------------------------------------------------------------------------
 HISTFILE=${HOME}/.zsh_history
 HISTSIZE=100000
 SAVEHIST=100000
@@ -30,7 +35,10 @@ setopt share_history
 #function history-all { history -E 1 }
 #setopt COMPLETE_IN_WORD
 
-# 自動補完設定 ===========================================================
+
+#------------------------------------------------------------------------
+# completion configuration
+#------------------------------------------------------------------------
 fpath=(${HOME}/.zsh/functions/Completion ${fpath})
 fpath=(${HOME}/.zsh/modules/zsh-completions/src ${fpath})
 
@@ -61,7 +69,9 @@ zstyle ':completion:*:sudo:*' command-path /usr/local/sbin \
                                            /usr/X11R6/bin
 
 
-##プロンプト設定 =========================================================
+#------------------------------------------------------------------------
+# prompt configuration
+#------------------------------------------------------------------------
 autoload -U colors zsh/terminfo
 colors
 setopt prompt_subst
@@ -93,8 +103,9 @@ local pl_line2="${p_mark}"
 
 PROMPT="${pl_line1}"$'\n'"${pl_line2} "
 
-
-##vcs_info設定 ===========================================================
+#------------------------------------------------------------------------
+# version controll configuration
+#------------------------------------------------------------------------
 RPROMPT=""
 
 autoload -Uz vcs_info
@@ -271,18 +282,39 @@ function _update_vcs_info_msg() {
 }
 add-zsh-hook precmd _update_vcs_info_msg
 
-##エイリアス設定 =========================================================
+
+
+#------------------------------------------------------------------------
+# nvm configuration
+#------------------------------------------------------------------------
+if [ -f ${HOME}/.nvm/nvm.sh ]; then
+    . ${HOME}/.nvm/nvm.sh
+    nvm use default > /dev/null
+    npm_dir=${NVM_PATH}_modules
+    export NODE_PATH=${npm_dir}
+fi
+
+
+#------------------------------------------------------------------------
+# rvm configuration
+#------------------------------------------------------------------------
+if [ -f ${HOME}/.rvm/installed.at ]; then
+    # Add RVM to PATH for scripting
+
+    [ ! `echo $PATH | grep "${HOME}/.rvm/bin"` ]    && export PATH=${HOME}/.rvm/bin:$PATH
+fi
+
+
+#------------------------------------------------------------------------
+# Alias configuration
+#------------------------------------------------------------------------
 setopt complete_aliases
-alias where="command -v"
-alias j="jobs -l"
 
 case "${OSTYPE}" in
 freebsd*|darwin*)
     alias ls="ls -G -w"
     alias ll='ls -G -w -al'
     alias la='ls -G -w -a'
-    alias bootlog='last | grep -E "(reboot|shutdown)"'
-    alias routeset='sudo route add 10.0.0.0/24 -interface en1'
     ;;
 linux*)
     alias ls="ls --color=auto -v"
@@ -291,6 +323,8 @@ linux*)
     ;;
 esac
 
+alias where="command -v"
+alias j="jobs -l"
 alias grep='grep --color=auto'
 alias rm='rm -i'
 alias cp='cp -i'
@@ -302,15 +336,21 @@ alias df="df -h"
 alias vi="vim"
 alias sudo="sudo PATH=$PATH"
 
-# nvm
-[[ -s ${HOME}/.nvm/nvm.sh ]] && . ${HOME}/.nvm/nvm.sh
-nvm use default > /dev/null
-npm_dir=${NVM_PATH}_modules
-export NODE_PATH=${npm_dir}
 
-# rvm
-PATH=$PATH:$HOME/.rvm/bin # Add RVM to PATH for scripting
+#------------------------------------------------------------------------
+# Load environment configuration
+#------------------------------------------------------------------------
+case "${OSTYPE}" in
+darwin*)
+    [ -f ~/.zshrc.osx ] && source ~/.zshrc.osx
+    ;;
+linux*)
+    [ -f ~/.zshrc.linux ] && source ~/.zshrc.linux 
+    ;;
+esac
 
 
-# color check
-#for code in {000..255}; do print -nP -- "%F{$code}$code %f"; [ $((${code} % 16)) -eq 15 ] && echo; done
+#------------------------------------------------------------------------
+# Load local configuration
+#------------------------------------------------------------------------
+[ -f ~/.zshrc.local ] && source ~/.zshrc.local
