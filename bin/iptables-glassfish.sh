@@ -35,6 +35,9 @@
 /sbin/iptables -A INPUT -d 255.255.255.255 -j DROP
 /sbin/iptables -A INPUT -d 224.0.0.1 -j DROP
 
+# zabbix-agent
+/sbin/iptables -A INPUT -p tcp --dport 10050 -j ACCEPT
+
 # FTPを許可（5分に5回のアクセス失敗時はブロック）
 #/sbin/iptables -A INPUT -p tcp --dport 20 -j ACCEPT
 #/sbin/iptables -A INPUT -p tcp --syn --dport 20 -m recent --name ftpattack --set
