@@ -61,6 +61,7 @@
 
 # glassfish 管理画面設定
 /sbin/iptables -A INPUT -p tcp --dport 4848 -j ACCEPT
+/sbin/iptables -A INPUT -p tcp --dport 8009 -j ACCEPT
 
 # メール設定
 #/sbin/iptables -A INPUT -p tcp --dport 25 -j ACCEPT
