@@ -1,1 +1,3 @@
 _vim/bundle
+_vim/.netrwhist
+bin/php-cs-fixer.phar
