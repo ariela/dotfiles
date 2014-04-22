@@ -1,0 +1,25 @@
+# Add Repository
+tap homebrew/versions || true
+tap phinze/homebrew-cask || true
+tap homebrew/binary || true
+# Brew Update
+update || true
+# Brew Cask
+install brew-cask || true
+# Packages
+install --disable-etcdir zsh || true
+install vim || true
+install jq || true
+install curl || true
+install wget || true
+install composer || true
+# Cask Packages
+cask install iterm2 || true
+cask install sourcetree || true
+cask install sequel-pro || true
+cask install google-chrome || true
+cask install virtualbox || true
+cask install vagrant || true
+cask install sublime-text || true
+cask install cyberduck || true
+cask install netbeans || true

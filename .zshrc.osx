@@ -1,0 +1,3 @@
+# パスを追加する
+[ ! `echo $PATH | grep "/usr/local/bin"` ]  && export PATH=/usr/local/bin:$PATH
+[ ! `echo $PATH | grep "/usr/local/sbin"` ] && export PATH=/usr/local/sbin:$PATH

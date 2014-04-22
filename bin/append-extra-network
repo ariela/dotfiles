@@ -1,4 +1,7 @@
 #!/bin/sh
 route add 10.0.0.0/24 -interface en1
+route add 10.1.1.0/24 -interface en1
 route add 192.168.250.0/24 -interface en1
+route add 192.168.1.0/24 -interface en1
+route add 192.168.11.0/24 -interface en1
 netstat -rn
